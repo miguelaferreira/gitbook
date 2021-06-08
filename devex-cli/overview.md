@@ -16,7 +16,7 @@ As you probably noticed already the tools offered are organised in sub-commands.
 
 ## Tools
 
-* [GitLab](https://app.gitbook.com/@miguelaferreira/s/devex/devex-cli/gitlab)
+* [GitLab](gitlab.md)
 * GitHub \(wip\)
 
 ## Common command line options
@@ -29,8 +29,3 @@ All tools support the following command line options.
 * `-x`, `--very-verbose`: Print out even more information about what the tool is doing.
 * `--debug`: Sets all loggers to DEBUG level.
 * `--trace`: Sets all loggers to TRACE level. ⚠️ WARNING: this setting will leak tokens used for HTTP authentication \(eg. the GitLab token\) to the logs, use with caution. ⚠️
-
-
-
-
-
