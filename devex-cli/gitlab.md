@@ -20,7 +20,7 @@ Interacting with public or private groups is not the same. Public groups \(and t
 
 ## Clone
 
-GitLab offers the ability to create groups of repositories and then leverage those groups to manage multiple repositories at one. Things like CI/CD, user membership can be defined at the group level and then inherited by all the underlying repositories. Furthermore, it's also possible to create relationships between repositories simply by leveraging the group structure. For example, one can include git sub-modules and reference them by their relative path. 
+GitLab offers the ability to create groups of repositories and then leverage those groups to manage multiple repositories at one. Things like CI/CD, user membership can be defined at the group level and then inherited by all the underlying repositories. Furthermore, it's also possible to create relationships between repositories simply by leveraging the group structure. For example, one can include git sub-modules and reference them by their relative path.
 
 It's handy, and sometimes needed, to clone the groups of repositories preserving the group structure. That is what this tool does.
 
@@ -50,7 +50,9 @@ There are three requirements for cloning via `SSH` that apply to both public and
 
    See [GitLab documentation on configuring SSH access](https://docs.gitlab.com/ee/ssh/) for more information on how to set this up.
 
-3. The private key must be in the PEM format, the key file needs to start with the line `-----BEGIN RSA PRIVATE KEY-----`. _Note: Support for the OpenSSH key format and newer ssh-ed25519 host keys_ _will be available once a native binary can be produced with a Java15._
+3. The private key must be in the PEM format, the key file needs to start with the line `-----BEGIN RSA PRIVATE KEY-----`.
+   _Note: Support for the OpenSSH key format and newer ssh-ed25519 host keys will be available once a native binary can be produced with a Java15._
+   _Progress on this is tracked in [this issue](https://github.com/miguelaferreira/devex-cli/issues/3)._
 
 ### Cloning a public group from gitlab.com
 
@@ -66,7 +68,7 @@ To have the tool also initialize the git submodules of each repository add `--re
 devex gitlab clone --recurse-submodules open-source-devex
 ```
 
-The previous commands clone the group to the current directory. The local path where the group is cloned can be customized by adding that path as the last argument. The following command will clone the group under the directory `${HOME}/gitlab.com`, creating that directory if it does not exist. 
+The previous commands clone the group to the current directory. The local path where the group is cloned can be customized by adding that path as the last argument. The following command will clone the group under the directory `${HOME}/gitlab.com`, creating that directory if it does not exist.
 
 ```text
 devex gitlab clone open-source-devex ~/gitlab.com
@@ -158,6 +160,3 @@ To clone from a hosted GitLab installation the URL for that installation needs t
 GITLAB_URL="https://gitlab.acme.com" \
 GITLAB_TOKEN="..." devex gitlab clone "some private group"
 ```
-
-
-
