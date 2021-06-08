@@ -16,7 +16,7 @@ As you probably noticed already the tools offered are organised in sub-commands.
 
 ## Tools
 
-* [GitLab](gitlab.md){:target="_blank"}
+* [GitLab](gitlab.md)
 * GitHub \(wip\)
 
 ## Common command line options
