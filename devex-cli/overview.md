@@ -16,7 +16,7 @@ As you probably noticed already the tools offered are organised in sub-commands.
 
 ## Tools
 
-* [GitLab](../devex-cli/gitlab.md)
+* [GitLab](https://app.gitbook.com/@miguelaferreira/s/devex/devex-cli/gitlab)
 * GitHub \(wip\)
 
 ## Common command line options
