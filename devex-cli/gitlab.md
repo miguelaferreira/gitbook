@@ -14,13 +14,13 @@ Before we start with real usage commands a few distinctions need to be made.
 * Interacting with public or private groups and projects.
 * Using `SSH` or `HTTPS` protocols to interact with git repositories.
 
-By default the tools targets gitlab.com, but setting the variable `GITLAB_URL` on the environment will make it target any arbitrary GitLab installation. The API offered by gitlab.com offers the latest released versions of the endpoints. While hosted installations offer arbitrary versions of those endpoints. The tool is build against the latest available endpoints, but for certain operations the API version is checked and fallback implementations for older versions can be offered. When the tool tries to cal an API endpoint that isn't available the endpoint will return a `404 Not Found` error.
+By default the tools targets gitlab.com, but setting the variable `GITLAB_URL` on the environment will make it target any arbitrary GitLab installation. The API offered by gitlab.com offers the latest released versions of the endpoints. While hosted installations offer arbitrary versions of those endpoints. The tool is built against the latest available endpoints, but for certain operations the API version is checked and fallback implementations for older versions can be offered. When the tool tries to cal an API endpoint that isn't available the endpoint will return a `404 Not Found` error.
 
 Interacting with public or private groups is not the same. Public groups \(and their public projects\) can be discovered and cloned without needing a private token. Interacting with private groups always needs a private token. The private token must be set on the environment using the variable `GITLAB_TOKEN`. The token needs at least the `read_api` scope. See GitLab's [Limiting scopes of a personal access token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#limiting-scopes-of-a-personal-access-token) for more details on token scopes.
 
 ## Clone
 
-GitLab offers the ability to create groups of repositories and then leverage those groups to manage multiple repositories at one. Things like CI/CD, user membership can be defined at the group level and then inherited by all the underlying repositories. Furthermore, it's also possible to create relationships between repositories simply by leveraging the group structure. For example, one can include git sub-modules and reference them by their relative path.
+GitLab offers the ability to create groups of repositories and then leverage those groups to manage multiple repositories at once. Things like CI/CD, or user membership can be defined at the group level and then inherited by all the underlying repositories. Furthermore, it's also possible to create relationships between repositories simply by leveraging the group structure. For example, one can include git sub-modules and reference them by their relative path.
 
 It's handy, and sometimes needed, to clone the groups of repositories preserving the group structure. That is what this tool does.
 
@@ -40,7 +40,7 @@ Besides the common `devex` command line options, the `gitlab clone` command offe
 
 To clone via `SSH` \(option: `--clone-protocol=ssh`, default\) the host where the tool runs needs to be configured appropriately with a private key because the tool won't ask for a password. To clone via `HTTPS` \(option: `--clone-protocol=https`\) the host does not need any setup, and the private token will be used as the password for cloning private projects.
 
-There are three requirements for cloning via `SSH` that apply to both public and private groups:
+There are two requirements for cloning via `SSH` that apply to both public and private groups.
 
 1. A known hosts file containing and entry for the GitLab server must exist in the default
 
@@ -49,10 +49,6 @@ There are three requirements for cloning via `SSH` that apply to both public and
 2. A private key must exist in the default location \(`${HOME}/.ssh/id_rsa`\) or in a different location as long there is an entry for the GitLab server in the ssh client configuration \(`${HOME}/.ssh/config`\) that points to the correct key.
 
    See [GitLab documentation on configuring SSH access](https://docs.gitlab.com/ee/ssh/) for more information on how to set this up.
-
-3. The private key must be in the PEM format, the key file needs to start with the line `-----BEGIN RSA PRIVATE KEY-----`.
-   _Note: Support for the OpenSSH key format and newer ssh-ed25519 host keys will be available once a native binary can be produced with a Java15._
-   _Progress on this is tracked in [this issue](https://github.com/miguelaferreira/devex-cli/issues/3)._
 
 ### Cloning a public group from gitlab.com
 
@@ -80,35 +76,35 @@ After executing the previous command a directory structure similar to the follow
 tree -d -L 2 ~/gitlab.com/open-source-devex
 /Users/miguel/gitlab.com/open-source-devex
 ├── containers
-│   ├── application
-│   ├── bastion
-│   ├── build
-│   ├── build-java
-│   ├── build-node
-│   ├── build-packer
-│   ├── build-terraform
-│   ├── ecr-container-scan-kickstarter
-│   ├── inspector-kickstarter
-│   ├── java
-│   ├── keybase
-│   ├── maintenance-page
-│   └── spring-boot-admin
+│ ├── application
+│ ├── bastion
+│ ├── build
+│ ├── build-java
+│ ├── build-node
+│ ├── build-packer
+│ ├── build-terraform
+│ ├── ecr-container-scan-kickstarter
+│ ├── inspector-kickstarter
+│ ├── java
+│ ├── keybase
+│ ├── maintenance-page
+│ └── spring-boot-admin
 ├── gitlab-ci-config
-│   └── terraform
+│ └── terraform
 ├── install-me
-│   ├── git-flow
-│   └── webapp
+│ ├── git-flow
+│ └── webapp
 ├── serverless
-│   └── aws
+│ └── aws
 ├── terraform-modules
-│   ├── 0-cicd
-│   ├── aws
-│   ├── devops
-│   ├── gitlab
-│   ├── kubernetes
-│   └── utils
+│ ├── 0-cicd
+│ ├── aws
+│ ├── devops
+│ ├── gitlab
+│ ├── kubernetes
+│ └── utils
 ├── terraformed-systems
-│   └── example
+│ └── example
 └── toolbox
     ├── aws
     ├── backups
@@ -128,7 +124,7 @@ To clone a group that has a name with spaces, wrap the name in quotes.
 devex gitlab clone "Healthcare Research Analysis"
 ```
 
-The tools supports other ways of specifying the group to be cloned. The group can be selected by its GitLab id, or via full path. Both options are very useful when cloning GitLab sub-groups.
+The tools support other ways of specifying the group to be cloned. The group can be selected by its GitLab id, or via full path. Both options are very useful when cloning GitLab sub-groups.
 
 ```text
 devex gitlab clone --search-mode=id 2150497
