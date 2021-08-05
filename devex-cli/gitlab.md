@@ -156,3 +156,4 @@ To clone from a hosted GitLab installation the URL for that installation needs t
 GITLAB_URL="https://gitlab.acme.com" \
 GITLAB_TOKEN="..." devex gitlab clone "some private group"
 ```
+
