@@ -33,7 +33,7 @@ Besides the common `devex` command line options, the `terraform taint-secrets` c
 
 ### Tainting terraform secrets
 
-To taint secrets in the state of a terraform module the module needs to be reachable in the local filesystem, and it also needs to be filly initialized.
+To taint secrets in the state of a terraform module, that module needs to be reachable in the local filesystem, and it also needs to be fully initialized.
 Any credentials required to access the state (ie. to execute `terraform state pull|push`) need to be provided in the exact same way they are provided to `terraform state` commands.
 
 Assuming there is a module at `~/terraform/infrastructure` we can taint the secrets on that module with the following command.
@@ -42,7 +42,7 @@ devex terraform taint-secrets ~/terraform/infrastructure
 ```
 
 If to execute a `terraform state` command we would need to provide some credentials via the environment, then we need to provide the same credentials to `devex terraform taint-secrets`.
-We will use an aws named profile as an example of passing credentials via the environment.
+We will use an AWS named profile as an example of passing credentials via the environment.
 ```text
 # terraform state command with aws named profile
 AWS_PROFILE=my-aws-profile terraform state pull
@@ -64,11 +64,11 @@ However, this is only possible if no other operation manipulated the state in be
 
 Secrets are terraform resources that contain sensitive material and because of that it's good to re-generate them periodically.
 There are many terraform providers and each defines resources that can be seen as secrets.
-The tool has a default list of what resources are secrets that should keep evolving.
-The default list is defined in a [configuration file](https://github.com/miguelaferreira/devex-cli/blob/main/src/main/resources/application.yml).
+The tool has a default list of what resources are considered secrets, and that list should keep evolving overtime.
+The default list is defined in a [configuration file](https://github.com/miguelaferreira/devex-cli/blob/main/src/main/resources/application.yml) in the tool's git repository.
 Feel free to open pull-requests to add new secrets to the default list.
-However, it is possible to overwrite the list at runtime by setting a comma separated list of resource types in the variable `TERRAFORM_SECRETS`.
 
+It is also possible to overwrite the list at runtime by setting a comma separated list of resource types in the variable `TERRAFORM_SECRETS`.
 In the following command we overwrite the list of secrets the tool will consider as secrets.
 ```text
 TERRAFORM_SECRETS="aws_iam_access_key,tls_private_key,random_password" devex terraform taint-secrets MODULE
@@ -76,7 +76,7 @@ TERRAFORM_SECRETS="aws_iam_access_key,tls_private_key,random_password" devex ter
 
 ### Terragrunt and other terraform wrappers
 
-The tool expect that the terraform binary is installed and discoverable via the environment's `PATH` variable.
+The tool expect that the terraform binary is installed and discoverable through the environment's `PATH` variable.
 However, when it is not directly discoverable it is possible to define the full path to the binary using the `TERRAFORM_COMMAND` variable.
 ```text
 TERRAFORM_COMMAND="/Users/miguel/tools/terraform" devex terraform taint-secrets MODULE
@@ -88,6 +88,7 @@ If terragrunt is discoverable via the environment's `PATH` then just setting the
 TERRAFORM_COMMAND="terragrunt" devex terraform taint-secrets MODULE
 ```
 Otherwise, use the full path to the `terragrunt` binary.
+The same applies to any other terraform wrappers.
 
 ### Rotating secrets
 
