@@ -26,6 +26,7 @@ The tools, and the respective sub-commands, are typically named after the thing 
 
 * [GitLab](gitlab.md)
 * [GitHub](github.md)
+* [Terraform](terraform.md)
 
 ## Common command line options
 
