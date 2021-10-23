@@ -79,7 +79,7 @@ TERRAFORM_SECRETS="aws_iam_access_key,tls_private_key,random_password" devex ter
 The tool expect that the terraform binary is installed and discoverable through the environment's `PATH` variable.
 However, when it is not directly discoverable it is possible to define the full path to the binary using the `TERRAFORM_COMMAND` variable.
 ```text
-TERRAFORM_COMMAND="/Users/miguel/tools/terraform" devex terraform taint-secrets MODULE
+TERRAFORM_COMMAND="/Users/miguel/tools/terraform" devex terraform taint-secrets ~/terraform/infrastructure
 ```
 
 Using the same mechanism it is possible to use terraform wrappers like terragrunt instead.
