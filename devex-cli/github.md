@@ -37,7 +37,7 @@ It's handy, and sometimes needed, to clone the organizations of repositories pre
 That is what this tool does.
 
 The command takes two parameters, the organization to be cloned and the local path where to clone.
-The path parameter is option and f omitted defaults to the current directory.
+The path parameter is optional and if omitted defaults to the current directory.
 
 ```text
 devex github clone [-hrvVx] [--debug] [--trace] [-c=<cloneProtocol>] ORGANIZATION PATH

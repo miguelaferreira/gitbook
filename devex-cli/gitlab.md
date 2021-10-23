@@ -40,7 +40,7 @@ It's handy, and sometimes needed, to clone the groups of repositories preserving
 That is what this tool does.
 
 The command takes two parameters, the group to be cloned and the local path where to clone.
-The path parameter is option and f omitted defaults to the current directory.
+The path parameter is optional and if omitted defaults to the current directory.
 
 ```text
 devex gitlab clone [-hrvVx] [--debug] [--trace] [-c=<cloneProtocol>] [-m=<searchMode>] GROUP PATH
