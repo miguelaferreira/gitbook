@@ -31,6 +31,35 @@ Besides the common `devex` command line options, the `terraform taint-secrets` c
 
 * `-u`, `--untaint`: Untaint previously tainted secrets. This effectively reverses the actions of the tool.
 
+### Tainting terraform secrets
+
+To taint secrets in the state of a terraform module the module needs to be reachable in the local filesystem, and it also needs to be filly initialized.
+Any credentials required to access the state (ie. to execute `terraform state pull|push`) need to be provided in the exact same way they are provided to `terraform state` commands.
+
+Assuming there is a module at `~/terraform/infrastructure` we can taint the secrets on that module with the following command.
+```text
+devex terraform taint-secrets ~/terraform/infrastructure
+```
+
+If to execute a `terraform state` command we would need to provide some credentials via the environment, then we need to provide the same credentials to `devex terraform taint-secrets`.
+We will use an aws named profile as an example of passing credentials via the environment.
+```text
+# terraform state command with aws named profile
+AWS_PROFILE=my-aws-profile terraform state pull
+
+# devex terraform taint-secrets with the same aws named profile
+AWS_PROFILE=my-aws-profile devex terraform taint-secrets ~/terraform/infrastructure
+```
+
+### Untainting secrets
+
+To revert the changes made by the tool it is possible to set the `--untaint` flag while re-running the tool.
+In that case the tool will untain all secrets, effectively resetting the state back.
+```text
+devex terraform taint-secrets --untaint ~/terraform/infrastructure
+```
+However, this is only possible if no other operation manipulated the state in between taint and untaint.
+
 ### What are secrets?
 
 Secrets are terraform resources that contain sensitive material and because of that it's good to re-generate them periodically.
