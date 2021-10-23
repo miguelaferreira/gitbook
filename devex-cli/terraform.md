@@ -88,3 +88,15 @@ If terragrunt is discoverable via the environment's `PATH` then just setting the
 TERRAFORM_COMMAND="terragrunt" devex terraform taint-secrets MODULE
 ```
 Otherwise, use the full path to the `terragrunt` binary.
+
+### Rotating secrets
+
+Tainting the resources does not actually re-create them.
+All it does is mark them for recreation on the next `terraform apply`.
+To effectively rotate the secrets follow the taint-secrets command with a `terraform apply`.
+
+```text
+devex terraform taint-secrets ~/terraform/infrastructure
+cd ~/terraform/infrastructure
+terraform apply
+```
