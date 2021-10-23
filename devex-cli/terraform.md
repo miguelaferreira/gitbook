@@ -30,3 +30,32 @@ devex terraform taint-secrets [-huvVx] [--debug] [--trace] MODULE
 Besides the common `devex` command line options, the `terraform taint-secrets` command offers the following options.
 
 * `-u`, `--untaint`: Untaint previously tainted secrets. This effectively reverses the actions of the tool.
+
+### What are secrets?
+
+Secrets are terraform resources that contain sensitive material and because of that it's good to re-generate them periodically.
+There are many terraform providers and each defines resources that can be seen as secrets.
+The tool has a default list of what resources are secrets that should keep evolving.
+The default list is defined in a [configuration file](https://github.com/miguelaferreira/devex-cli/blob/main/src/main/resources/application.yml).
+Feel free to open pull-requests to add new secrets to the default list.
+However, it is possible to overwrite the list at runtime by setting a comma separated list of resource types in the variable `TERRAFORM_SECRETS`.
+
+In the following command we overwrite the list of secrets the tool will consider as secrets.
+```text
+TERRAFORM_SECRETS="aws_iam_access_key,tls_private_key,random_password" devex terraform taint-secrets MODULE
+```
+
+### Terragrunt and other terraform wrappers
+
+The tool expect that the terraform binary is installed and discoverable via the environment's `PATH` variable.
+However, when it is not directly discoverable it is possible to define the full path to the binary using the `TERRAFORM_COMMAND` variable.
+```text
+TERRAFORM_COMMAND="/Users/miguel/tools/terraform" devex terraform taint-secrets MODULE
+```
+
+Using the same mechanism it is possible to use terraform wrappers like terragrunt instead.
+If terragrunt is discoverable via the environment's `PATH` then just setting the terraform command to `terragrunt` will be enough.
+```text
+TERRAFORM_COMMAND="terragrunt" devex terraform taint-secrets MODULE
+```
+Otherwise, use the full path to the `terragrunt` binary.
